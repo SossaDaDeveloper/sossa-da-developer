@@ -16,7 +16,9 @@ import {
   Zap, 
   Cpu, 
   Globe,
-  ArrowUpRight
+  ArrowUpRight,
+  CheckCircle2,
+  Loader2
 } from 'lucide-react';
 
 // --- Types ---
@@ -67,6 +69,37 @@ const SKILLS = [
 ];
 
 export default function App() {
+  const [status, setStatus] = React.useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus('loading');
+    
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("https://formspree.io/f/xvzyplka", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        form.reset();
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      setStatus('error');
+    }
+  }
+
   return (
     <div className="min-h-screen font-sans selection:bg-zinc-100 selection:text-zinc-900">
       
@@ -115,7 +148,7 @@ export default function App() {
             </p>
             <div className="flex flex-wrap gap-4">
               <a 
-                href="mailto:mosessossa0@gmail.com"
+                href="#experience"
                 className="group flex items-center gap-2 bg-zinc-100 text-zinc-950 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-white transition-all"
                 id="cta-contact"
               >
@@ -253,26 +286,101 @@ export default function App() {
             </div>
           </div>
           
-          <div className="flex flex-col justify-center items-start md:items-end">
-            <div className="bg-zinc-900/50 border border-zinc-800 p-8 rounded-3xl max-w-sm">
-              <h3 className="text-zinc-100 font-medium mb-4">Let's build something beautiful.</h3>
-              <p className="text-zinc-400 text-sm mb-6">
-                Now accepting freelance projects and architectural UI consulting.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer">
-                  <Mail className="w-4 h-4" />
-                  <span className="text-xs font-mono">mosessossa0@gmail.com</span>
-                </div>
-                <div className="flex items-center gap-3 text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer">
-                  <Phone className="w-4 h-4" />
-                  <span className="text-xs font-mono">09134336853</span>
-                </div>
-                <div className="flex items-center gap-3 text-zinc-500">
-                  <MapPin className="w-4 h-4" />
-                  <span className="text-xs font-mono tracking-tighter">Lagos, Nigeria</span>
-                </div>
-              </div>
+          <div className="flex flex-col justify-start items-start md:items-end">
+            <div className="w-full max-w-md">
+              <h3 className="text-zinc-100 text-3xl font-semibold mb-8">Have a Project?</h3>
+              <AnimatePresence mode="wait">
+                {status === 'success' ? (
+                  <motion.div 
+                    key="success"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="bg-zinc-900/40 border border-zinc-800 p-10 rounded-2xl text-center"
+                  >
+                    <div className="w-16 h-16 bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-6 text-zinc-100 border border-zinc-700">
+                      <CheckCircle2 className="w-8 h-8" />
+                    </div>
+                    <h4 className="text-xl font-medium text-zinc-100 mb-2">Message Sent!</h4>
+                    <p className="text-sm text-zinc-500 mb-8 leading-relaxed">
+                      Thank you for reaching out. I've received your message and will get back to you shortly.
+                    </p>
+                    <button 
+                      onClick={() => setStatus('idle')}
+                      className="text-xs text-zinc-100 font-mono underline decoration-zinc-800 underline-offset-8 hover:decoration-zinc-500 transition-all uppercase tracking-widest cursor-pointer"
+                    >
+                      Send another message
+                    </button>
+                  </motion.div>
+                ) : (
+                  <motion.form 
+                    key="form"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    onSubmit={handleSubmit}
+                    className="space-y-6"
+                  >
+                    <div>
+                      <label htmlFor="name" className="block text-xs font-mono uppercase tracking-widest text-zinc-500 mb-2">Name</label>
+                      <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        required 
+                        placeholder="Enter your name"
+                        className="w-full bg-zinc-900/30 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-zinc-100 focus:outline-none focus:border-zinc-600 transition-colors placeholder:text-zinc-700"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block text-xs font-mono uppercase tracking-widest text-zinc-500 mb-2">Email</label>
+                      <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        required 
+                        placeholder="name@example.com"
+                        className="w-full bg-zinc-900/30 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-zinc-100 focus:outline-none focus:border-zinc-600 transition-colors placeholder:text-zinc-700"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="message" className="block text-xs font-mono uppercase tracking-widest text-zinc-500 mb-2">Message</label>
+                      <textarea 
+                        id="message" 
+                        name="message" 
+                        required 
+                        rows={4}
+                        placeholder="Describe your project vision..."
+                        className="w-full bg-zinc-900/30 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-zinc-100 focus:outline-none focus:border-zinc-600 transition-colors placeholder:text-zinc-700 resize-none"
+                      ></textarea>
+                    </div>
+                    <div className="space-y-4">
+                      <button 
+                        type="submit"
+                        disabled={status === 'loading'}
+                        className="group flex items-center justify-center gap-2 w-full bg-zinc-100 text-zinc-950 py-3 rounded-lg text-sm font-semibold hover:bg-white transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {status === 'loading' ? (
+                          <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            Send Message
+                            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          </>
+                        )}
+                      </button>
+                      {status === 'error' && (
+                        <p className="text-xs text-red-500 text-center font-mono uppercase tracking-widest">
+                          Something went wrong. Please try again.
+                        </p>
+                      )}
+                    </div>
+                  </motion.form>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </section>
@@ -286,10 +394,10 @@ export default function App() {
             © 2026 Sossa Moses. Built with precision.
           </div>
           <div className="flex gap-8">
-            <a href="https://github.com/SossaDaDeveloper" className="text-zinc-600 hover:text-zinc-300 transition-colors">
+            <a href="https://github.com/SossaDaDeveloper" className="text-zinc-600 hover:text-zinc-300 transition-colors" target="_blank" rel="no-referrer">
               <Github className="w-4 h-4" id="footer-github" />
             </a>
-            <a href="mailto:mosessossa0@gmail.com" className="text-zinc-600 hover:text-zinc-300 transition-colors">
+            <a href="#experience" className="text-zinc-600 hover:text-zinc-300 transition-colors">
               <Mail className="w-4 h-4" id="footer-mail" />
             </a>
           </div>
