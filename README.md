@@ -1,20 +1,54 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Sossa Moses — Portfolio
 
-# Run and deploy your AI Studio app
+A frontend Developer focused on building modern, responsive, and user-centered web experiences by transforming UI/UX designs into functional interfaces.
 
-This contains everything you need to run your app locally.
+## Overview
 
-View your app in AI Studio: https://ai.studio/apps/5c9d632d-658b-4f2c-8b51-b72fa2a5972d
+This portfolio showcases selected projects that demonstrate my ability to design and develop clean, responsive, and scalable frontend applications. The focus is on usability, performance, and visual consistency across devices.
 
-## Run Locally
+## What I Do
 
-**Prerequisites:**  Node.js
+* Convert UI/UX designs into responsive web applications
+* Build modern landing pages and SaaS interfaces
+* Develop interactive dashboards and frontend systems
+* Improve UI performance and accessibility
+* Create reusable and scalable component structures
 
+## Tech Stack
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+* HTML5
+* CSS3
+* Tailwind CSS
+* JavaScript (ES6+)
+* React
+* Next.js
+* Git & GitHub
+* Figma (for design interpretation)
+
+I focus on clarity, hierarchy, and usability. Every interface is built to feel intuitive, fast, and visually consistent while maintaining clean and maintainable code structure.
+
+## Current Focus
+
+* Improving frontend architecture skills
+* Building production-ready UI systems
+* Strengthening React and Next.js expertise
+* Shipping real-world portfolio projects
+* Working with startups and product teams
+
+## Goals
+
+* Become a strong frontend engineer in product-focused teams
+* Work on scalable web applications and startup products
+* Build impactful digital solutions that solve real problems
+* Transition into a product-driven engineer and founder path
+
+## Contact
+
+* GitHub: https://github.com/SossaDaDeveloper
+* Email: [mosessossa0@gmail.com](mailto:mosessossa0@gmail.com)
+* Location: Lagos, Nigeria
+* Live Link: [Live](https://sossa-da-developer.vercel.app/).
+
+---
+
+This portfolio is continuously evolving as I build and refine more projects.
